@@ -1,0 +1,279 @@
+
+<html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Спецтехника</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+</head>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top"  style="background-color:#563d7c">
+  <a class="navbar-brand" href="#">СпецТех</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Главная</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Каталог автомобилей </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Спецтехника
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Автомобили с КМУ</a>
+          <a class="dropdown-item" href="#">Автоцистерны</a>
+		  <a class="dropdown-item" href="#">Мультилифты</a>
+		  <a class="dropdown-item" href="#">Эвакуаторы</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Для социальных служб</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Контакты</a>
+      </li>
+	  <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Искать</button>
+	  </form>
+    </ul>
+	<div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#exampleModal1" >Вход</button>
+        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#exampleModal">Регистрация</button>
+	</div>
+  </div>
+</nav>
+
+<br>
+
+
+
+{% block content %}
+    <div class="card-deck mb-3 text-center">
+    {% for tech in object_list %}
+
+            <div class="card mb-3 shadow-sm" id="del{{ tech.id }}">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal" id="nameform">{{ tech.name }}</h4>
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title pricing-card-title">{{ tech.marka }}<small class="text-muted"> <p>{{ tech.name }}</p></small></h2>
+                        <ul class="list-unstyled mt-3 mb-4">
+                          <li><img src="{{ tech.modell }}" width="190" height="100" alt="КМУ"></li>
+                          <li> <b>Грузоподьёмность (кг) :</b> {{ tech.gruz }} </li>
+                          <li> <b>Полная масса (кг) :</b> {{ tech.massa }}</li>
+                          <li> <b>Мощность двигателя (л.с.) :</b> {{ tech.dvig }}</li>
+                          <li> <b>Цена (тыс. руб.) :</b> {{ tech.cost }}</li>
+                        </ul>
+                    <a class="btn btn-lg btn-block btn-outline-primary" href="edit/{{tech.id}}" role="button">Редактировать</a>
+                    <a class="btn btn-lg btn-block btn-outline-danger" href="delete/{{tech.id}}" role="button">Удалить</a>
+                    <a class="btn btn-lg btn-block btn-outline-danger del_button" data-id="{{ tech.id }}" role="button">Удалить ajax</a>
+                 </div>
+        </div>
+
+    {% endfor %}
+    </div>
+{% endblock %}
+
+
+
+<!-- Modal registr -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Регистрация</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Email</label>
+				<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Введите Email">
+				<small id="emailHelp" class="form-text text-muted">Адрес не должен быть зарегистрирован на сайте</small>
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">Пароль</label>
+				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Пароль">
+			</div>
+			<div class="form-check">
+				<input type="checkbox" class="form-check-input" id="exampleCheck1">
+				<label class="form-check-label" for="exampleCheck1">Согласие на обработку персональных данных</label>
+			</div>
+			<button type="submit" class="btn btn-primary">Подтвердить</button>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-primary">Зарегистрироваться</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal enter -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Вход</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Email</label>
+				<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Введите Email">
+				<small id="emailHelp" class="form-text text-muted">Введите зарегестрированный почтовый адрес</small>
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">Пароль</label>
+				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Пароль">
+			</div>
+			
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-primary">Войти</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add --> 
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавление в каталог</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="create/">
+            {% csrf_token %}
+			<div class="form-group">
+				<label>Название спецтехники</label>
+				<input type="text" class="form-control" name="name" placeholder="Введите название">
+			</div>
+            <div class="form-group">
+				<label for="exampleInputPassword1">Картинка</label>
+				<input type="text" class="form-control" name="modell">
+			</div>
+			<div class="form-group">
+				<label>Название марки</label>
+				<input type="text" class="form-control" name="marka">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">Грузоподьёмность (кг)</label>
+				<input type="text" class="form-control" name="gruz">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">Полная масса (кг)</label>
+				<input type="text" class="form-control" name="massa">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">Мощность двигателя (л.с.)</label>
+				<input type="text" class="form-control" name="dvig">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">Цена (тыс. руб.)</label>
+				<input type="text" class="form-control" name="cost">
+			</div>
+			<input type="submit" value="Save">
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-primary">Добавить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit --> 
+<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Редактирование</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Заголовок</label>
+				<input  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Введите текст" value="Камаз">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">Название спецтехники</label>
+				<input class="form-control" id="exampleInputPassword1" placeholder="Введите название" value="Трактор">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">Грузоподьёмность (кг)</label>
+				<input class="form-control" id="exampleInputPassword1" value="3000">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">Полная масса (кг)</label>
+				<input class="form-control" id="exampleInputPassword1" value="2309">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">Мощность двигателя (л.с.)</label>
+				<input class="form-control" id="exampleInputPassword1" value="143">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">Цена (тыс. руб.)</label>
+				<input class="form-control" id="exampleInputPassword1" value="2000">
+			</div>
+			
+		</form>
+      </div>
+      <div class="modal-footer">
+		<button type="button" class="btn btn-danger">Удалить</button>
+		<h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1><h1></h1>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-success">Применить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+<!-- Footer -->
+<footer class="page-footer font-small blue">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2018 Copyright:
+    <a href="#"> Efanov Mikhail PI-52</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <script src="/static/ajax.js"></script>
+</body>
+</html>
